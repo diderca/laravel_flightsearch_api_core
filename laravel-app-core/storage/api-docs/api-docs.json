@@ -1,0 +1,140 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel 8.x Trip Builder Demo API Documentation",
+        "description": "using L5 Swagger OpenApi documentation",
+        "contact": {
+            "email": "shdcse@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": null,
+            "description": "Demo Trip Builder API Server v1.0"
+        }
+    ],
+    "paths": {
+        "/airline": {
+            "get": {
+                "tags": [
+                    "Airlines"
+                ],
+                "summary": "Get list of airlines available",
+                "description": "Returns list of airlines available",
+                "operationId": "getAirlineList",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/airoirts": {
+            "get": {
+                "tags": [
+                    "Airports"
+                ],
+                "summary": "Get list of airports available",
+                "description": "Returns list of airports available",
+                "operationId": "getAirportList",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/flights": {
+            "get": {
+                "tags": [
+                    "Flights"
+                ],
+                "summary": "Get list of flights available",
+                "description": "Returns list of flights available",
+                "operationId": "getflightList",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/trips": {
+            "get": {
+                "tags": [
+                    "Trips"
+                ],
+                "summary": "Get list of tripss available",
+                "description": "Returns list of tripss available",
+                "operationId": "getTripsList",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Flight": {
+                "title": "Flights",
+                "description": "Project model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "number": {
+                        "title": "Number",
+                        "description": "Flight number",
+                        "type": "string",
+                        "example": "1"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Project"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Flight Search and Trip Builder",
+            "description": "Flight Search and Trip Builder API Endpoints of Projects"
+        }
+    ]
+}
