@@ -80,7 +80,7 @@ class TripController extends Controller
                             @OA\Property(property="user_id", type="integer"),
                             @OA\Property(property="type", type="string", enum={"Single", "Round"}),
                             @OA\Property(property="from_city", type="string", enum={"Montral", "Toronto", "Vancouver"}),
-                            @OA\Property(property="to_city", type="string", enum={"Montreal", "Toronto", "Vancouver"})
+                            @OA\Property(property="to_city", type="string", enum={ "Toronto", "Montreal","Vancouver"})
                             )    
                 *       )
                 *   ),
@@ -263,21 +263,7 @@ class TripController extends Controller
                   }
                 
             }
-            // OA\Parameter(
-            //     *          name="tripType",
-            //     *          type="string",
-            //     *          enum={"Single", "Round"},
-            //     *          description="Select trip type",
-            //     *          in="query",     
-            //     *          style="form"
-            //     *           ),
-            //     *        sOA\Parameter(
-            //     *          name="airline",
-            //     *          description="Select specific airline's flight only",
-            //     *          in="query",     
-            //     *          style="form"
-            //     *           ),
-             
+
             $flightsAvailavle['departing_flights'] = $departingFlightsQueryBuilder->get();
 
 
