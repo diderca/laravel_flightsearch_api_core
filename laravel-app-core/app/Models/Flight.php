@@ -21,13 +21,6 @@ class Flight extends Model
 {
     use HasFactory;
 
-    public function trips()
-    {
-        return $this->belongsToMany(Trips::class, 'trip_flight','trip_id', 'flight_id')
-        ->withPivot(['flight_date','from_city','to_city', 'type'])
-        ->as('date'); 
-    }
-
     /**
      * @OA\Property(
      *     title="ID",
