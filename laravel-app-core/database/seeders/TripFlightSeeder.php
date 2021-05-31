@@ -22,35 +22,16 @@ class TripFlightSeeder extends Seeder
             'id' =>1,
             'trip_id' =>'1',
             'flight_id' =>'1',
-            'flight_date' =>'2020-01-01 00:00:00',
+            'departure_date' =>'2021-05-17 07:35:00',
+            'arrival_date' =>'2021-05-17 10:04:00',
             'status' =>'Active'
             ],
             [
             'id' =>2,
             'trip_id' =>'1',
             'flight_id' =>'2',
-            'flight_date' =>'2020-01-01 00:00:00',
-            'status' =>'Active'
-            ],
-            [
-            'id' =>3,
-            'trip_id' =>'2',
-            'flight_id' =>'3',
-            'flight_date' =>'2020-01-01 00:00:00',
-            'status' =>'Active'
-            ],
-            [
-            'id' =>4,
-            'trip_id' =>'2',
-            'flight_id' =>'4',
-            'flight_date' =>'2020-01-01 00:00:00',
-            'status' =>'Active'
-            ],
-            [
-            'id' =>5,
-            'trip_id' =>'3',
-            'flight_id' =>'5',
-            'flight_date' => '2020-01-01 00:00:00',
+            'departure_date' =>'2021-05-18 10:05:00',
+            'arrival_date' =>'2021-05-18 13:06:00',
             'status' =>'Active'
             ]
         ]);

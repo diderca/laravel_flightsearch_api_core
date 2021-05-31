@@ -4,7 +4,6 @@ use App\Models\Airport;
 use App\Http\Controllers\AirlineController;
 use App\Http\Controllers\AirportController;
 use App\Http\Controllers\FlightController;
-use App\Http\Controllers\TimezoneController;
 use App\Http\Controllers\TripController;
 
 use App\Models\Timezone;
@@ -36,18 +35,11 @@ Route::get('/airports', [AirportController::class, 'index']);
  
 // Flights
 Route::get('/flights', [FlightController::class, 'index']);
-
-// TimeZones
-Route::get('/timezones', [TimezoneController::class, 'index']);
  
 // Trips
 Route::get('/trips', [TripController::class, 'index']);
 Route::post('/trips', [TripController::class, 'store']);
 Route::post('/addFlight', [TripController::class, 'addFlight']);
-Route::post('/RemoveFlight', [TripController::class, 'removeFlight']);
+Route::post('/removeFlight', [TripController::class, 'removeFlight']);
     // Search Flight for a trip
-    Route::get('/SearchTripFlight', [TripController::class, 'searchTripFlight']);
-
-    
-
- 
+    Route::get('/searchTripFlight', [TripController::class, 'searchTripFlight']);
