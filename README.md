@@ -16,7 +16,7 @@ Mack or linux user with Docker:
 
 2. Run
 ```sh
-git clone https://github.com/diderca/laravel_api_core.git
+https://github.com/diderca/laravel_flightsearch_api_core.git
 cd laravel_api_core/laravel-app-core
 ./vendor/bin/sail up 
 ```
@@ -30,7 +30,7 @@ Windows User:
 4. run
 ```sh
 cd C:\laragon\www
-git clone https://github.com/diderca/laravel_api_core.git
+https://github.com/diderca/laravel_flightsearch_api_core.git
 cd laravel_api_core\laravel-app-core
 composer update
 php artisan migrete:fresh --seed
