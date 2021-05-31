@@ -11,10 +11,12 @@ Simple trip and flight booking api using sample data on Laravel 8.x framework.
  
 ## installation Steps:
 Mack or linux user with Docker:
-3. signup and install docker[https://hub.docker.com/search?offering=community&operating_system=mac&type=edition]
-4. 
+
+1. signup and install docker[https://hub.docker.com/search?offering=community&operating_system=mac&type=edition]
+
+2. Run
 ```sh
-git clone https://github.com/diderca/laravel_api_core.git
+https://github.com/diderca/laravel_flightsearch_api_core.git
 cd laravel_api_core/laravel-app-core
 ./vendor/bin/sail up 
 ```
@@ -24,10 +26,11 @@ Windows User:
 2. Open terminal !![image](https://user-images.githubusercontent.com/9303017/119930278-28090980-bf4d-11eb-84dd-15cdddc4585b.png)
 
 3. Create database locally called: `laravel-app-core`
-4. 
+
+4. run
 ```sh
 cd C:\laragon\www
-git clone https://github.com/diderca/laravel_api_core.git
+https://github.com/diderca/laravel_flightsearch_api_core.git
 cd laravel_api_core\laravel-app-core
 composer update
 php artisan migrete:fresh --seed
@@ -38,10 +41,6 @@ Run the server :
 ```sh
 php artisan serve
 
-```
-Runnig test :
-```sh
-php artisan test
 ```
 Starting Laravel development server: http://127.0.0.1:8000
 
