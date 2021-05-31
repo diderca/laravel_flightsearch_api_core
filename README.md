@@ -51,10 +51,7 @@ Routers:
  
 // Airports[http://127.0.0.1:8000/api/v1/airports]
  
-// Flights[http://127.0.0.1:8000/api/v1/flights]
-
-// TimeZones[http://127.0.0.1:8000/api/v1/timezones]
- 
+// Flights[http://127.0.0.1:8000/api/v1/flights] 
 // Trips[http://127.0.0.1:8000/api/v1/trips]
 // AddFlight [http://127.0.0.1:8000/api/v1/AddFlight]
 // RemoveFlight[http://127.0.0.1:8000/api/v1/RemoveFlight]
