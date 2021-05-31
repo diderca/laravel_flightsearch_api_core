@@ -8,7 +8,10 @@ use App\Models\Airport;
 use App\Models\Airline;
 use App\Models\Flight;
 use Illuminate\Http\Request;
-
+use phpDocumentor\Reflection\Types\Boolean;
+use DateTime;
+use DateTimeZone;
+use Error;
 
 class TripController extends Controller
 {
@@ -65,7 +68,7 @@ class TripController extends Controller
     }
 
     /**
-     * Show the form for creating a new trip.
+     * Creating a new trip.
      * 
      * @OA\Post(
      *      path="/trips",
@@ -127,10 +130,10 @@ class TripController extends Controller
             @OA\RequestBody(
                 *       @OA\MediaType(
                 *           mediaType="multipart/form-data",
-                *           @OA\Schema(required={"trip_id", "flight_id","flight_date"},
+                *           @OA\Schema(required={"trip_id", "flight_id","departure_date"},
                             @OA\Property(property="trip_id", type="integer"),
                             @OA\Property(property="flight_id", type="integer"),
-                            @OA\Property(property="flight_date", type="date", pattern= "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/", example= "2021-05-17")
+                            @OA\Property(property="departure_date", type="date", pattern= "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/", example= "2021-05-17")
                             )    
                 *       )
                 *   ),
@@ -152,17 +155,29 @@ class TripController extends Controller
     public function addFlight(Request $request)
     {
         $trip = Trip::find($request->trip_id);
-        $trip->flights()->attach($request->flight_id,['flight_date'=>$request->flight_date,'status'=>'Active']);
-        return $trip;
+         
+
+        // determine flight arrival date
+        // $flightArrivalDate = $this->flightarrivalDate($trip, $request->flight_id, $request->departure_date);
+        //TODO: add exception if validation for requested flight fails
+        //TODO:  private validation function maybe in manager file.
+        $flightArrivalDate= '2011-12-13 12:12:10';
+        // if($flightArrivalDate){
+        // //Attach Flight 
+        $trip->flights()->attach($request->flight_id,['departure_date'=>$request->departure_date,'arrival_date'=>$flightArrivalDate,'status'=>'Active']);
+        return $trip; 
+        //"flight added to the trip successfully";
+        // }
+        //TODO: add exception if validation for requested flight fails
+        
         
     }
 
-
     /**
-     * Show the form for creating a new trip.
+     * Remove a flight from a trip.
      * 
      * @OA\Post(
-     *      path="/RemoveFlight",
+     *      path="/removeFlight",
      *      operationId="removeTripFlight",
      *      tags={"Trips"},
      *      summary="Remove a Flight from a trip",
@@ -170,10 +185,10 @@ class TripController extends Controller
             @OA\RequestBody(
                 *       @OA\MediaType(
                 *           mediaType="multipart/form-data",
-                *           @OA\Schema(required={"trip_id", "flight_id", "flight_date"},
+                *           @OA\Schema(required={"trip_id", "flight_id", "departure_date"},
                             @OA\Property(property="trip_id", type="integer"),
                             @OA\Property(property="flight_id", type="integer"),
-                            @OA\Property(property="flight_date", type="date", pattern= "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/", example= "2021-05-17")
+                            @OA\Property(property="departure_date", type="date", pattern= "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/", example= "2021-05-17")
                             )    
                 *       )
                 *   ),
@@ -196,15 +211,15 @@ class TripController extends Controller
     {
         $trip = Trip::find($request->trip_id);
         $trip->flights()->detach($request->flight_id);
-        $trip->flights()->where('flight_id',$request->flight_id)->where('flight_date', $request->flight_date)->update(['trip_flight.status' => 'Removed']);
+        $trip->flights()->where('flight_id',$request->flight_id)->where('departure_date', $request->departure_date)->update(['trip_flight.status' => 'Removed']);
         return $trip;
     }
 
  /**
-     * Show the form for creating a new trip.
+     * Show available flight for a  trip.
      * 
      * @OA\Get(
-     *      path="/SearchTripFlight",
+     *      path="/searchTripFlight",
      *      operationId="searchTripFlight",
      *      tags={"Trips"},
      *      summary="Search Flights for a trip",
@@ -222,8 +237,9 @@ class TripController extends Controller
     *          in="query",     
     *          style="form"
     *           ),
-     *       @OA\Parameter(
+    *       @OA\Parameter(
     *          name="airline",
+    *          example="Air Canada",
     *          description="Select specific airline's flight only",
     *          in="query",     
     *          style="form"
@@ -286,26 +302,118 @@ class TripController extends Controller
         return $flightsAvailavle;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Trip  $trip
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Trip $trip)
-    {
-        //
+    private function flightArrivalDate(Trip $trip, $bookingFlightId, $bookingFlightDate) : string {
+
+        // Get bookingFlight Info.
+        $bookingFlightInfo = Flight::where('id', $bookingFlightId)->first();
+        // get FlightArrivalDateTime
+        $bookingFlightArrivalDate = $bookingFlightDate;
+
+        // Find departure airport timezone
+        $departureAirport = Airport::where('code', $bookingFlightInfo['departure_airport'])->first('timezone');
+        date_default_timezone_set($departureAirport['timezone']);
+
+        //local departure time At departure Airport
+        $departureAirportLocalTime = new DateTime($bookingFlightDate.'T'.$bookingFlightInfo['departure_time']);
+
+                // Find arrival airport timezone
+                $arrivalAirport = Airport::where('code', $bookingFlightInfo['arrival_airport'])->first('timezone');
+
+
+                // departure time at arrival airport local time
+                $departureAtArrivalAirportLocalTime = $departureAirportLocalTime->setTimezone(new \DateTimeZone($arrivalAirport['timezone']));
+
+                // Find arrive time at arrival airport local time
+                date_default_timezone_set($arrivalAirport['timezone']);
+                $arriveAtArrivalAirportLocalTime = new DateTime($bookingFlightDate.'T'.$bookingFlightInfo['arrival_time']);
+
+                // Find the time interval or flight time
+                $interval = new \DateInterval('PT1H');
+
+                //create periods in hours
+                $periods = new \DatePeriod($departureAtArrivalAirportLocalTime, $interval, $arriveAtArrivalAirportLocalTime);
+                
+                //The flight hours
+                $diff = $arriveAtArrivalAirportLocalTime->getTimestamp() - $departureAtArrivalAirportLocalTime->getTimestamp();
+                $flightTimeIntervalInHours = $diff / ( 60 * 60 );
+  
+        // TODO: vaidate connecting flight time conflict withen a trip and through and exception 
+        // test throwed exception in negetive test
+        // if(!$this->validateTimeConflict($trip, $departureAirportLocalTime, $departureAirport['timezone'])){
+        //     throw new \App\Exceptions\MyStripeException($e);
+        // }
+
+        // Finding out the departure date 
+        // if time interval is negetive arrival date will be next day.
+        if($flightTimeIntervalInHours < 0){ 
+            $flightDay = new DateTime($bookingFlightDate.'T'.'00:00:00');
+            $flightDay->modify('+1 day');
+            
+            return  $flightDay->format('Y-m-d');
+        }
+
+        return  $bookingFlightDate;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Trip  $trip
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Trip $trip)
-    {
-        //
+    /*
+   // TODO: this function valdate to makesure the booking flight don't conflict the existing flights 
+   //  by looking & comparing at latest flight arrival time at the arrival airport.
+
+    private function validateTimeConflict(Trip $trip, $departureAirportLocalTime, $departureAirportTimezone) : bool {
+
+        
+        $flights = $trip->flights()->where('flights.status', 'Active')->get();
+        // If no flight on the trip, valid to bok flight.
+        if(count($flights)> 0 ){
+            //find lattest arrival time of the latest flight
+            $latestFlightArrivaDateTime = null;
+            // loop throught the booked flights
+            foreach( $flights as $flight){
+                $i=0;
+                
+                // Find arrival airport timezone
+                $arribalAirport = Airport::where('code', $flight['arrival_airport'])->first('timezone');
+                date_default_timezone_set($arribalAirport['timezone']);
+                $arrivalDateTime = new \DateTime($flight['flight_info']['arrival_date'].' '.$flight['arrival_time']);
+                $arrivalAtArrivalAirportLocalTime = $arrivalDateTime->setTimezone(new \DateTimeZone($arribalAirport['timezone']));
+                if ($i=0) {$latestFlightArrivaDateTime = $arrivalAtArrivalAirportLocalTime;}
+
+                // Find the time interval or flight time
+                $interval = new \DateInterval('PT1H');
+
+                //create periods in hours
+                $periods = new \DatePeriod($arrivalAtArrivalAirportLocalTime, $interval, $latestFlightArrivaDateTime);
+                
+                //The flight hours
+                $diff = $latestFlightArrivaDateTime->getTimestamp() - $arrivalAtArrivalAirportLocalTime->getTimestamp();
+
+                $flightTimeIntervalInHours = $diff / ( 60 * 60 );
+
+                // uodate the latest time based on hours in negetive or positive number
+                if($flightTimeIntervalInHours > 0){  
+                    $latestFlightArrivaDateTime =  $arrivalAtArrivalAirportLocalTime;
+                }
+            }
+
+            // departure time at departure airport local time of boking flight
+            $departureAtdepartureAirportLocalTime = $departureAirportLocalTime->setTimezone(new \DateTimeZone($arribalAirport['timezone']));
+
+            //create periods in hours
+            $periods = new \DatePeriod($latestFlightArrivaDateTime, $interval, $departureAtArrivalAirportLocalTime);
+            
+            //The flight hours
+            $diff = $latestFlightArrivaDateTime->getTimestamp() - $arrivalAtArrivalAirportLocalTime->getTimestamp();
+
+            $flightTimeIntervalInHours = $diff / ( 60 * 60 );
+            // find time diff between the lattest arrival time - booking flight deperture time
+            if($flightTimeIntervalInHours < 0){  $latestFlightArrivaDateTime =  $arrivalAtArrivalAirportLocalTime;
+            return false;
+            }
+        return true;
+        }
     }
+    
+    
+    }
+ */
 }

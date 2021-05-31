@@ -9,5 +9,5 @@ class TripFlight extends Model
 {
     use HasFactory;
     protected $table = 'trip_flight';
-    protected $fillable =  ['trip_is_id','flight_id','flight_date','status'];
+    protected $fillable =  ['trip_is_id','flight_id','departure_date','arrival_date','status'];
 }

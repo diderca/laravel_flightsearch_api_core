@@ -17,7 +17,8 @@ class CreateTripFlightTable extends Migration
             $table->id();
             $table->foreignId('trip_id')->constrained('trips');
             $table->foreignId('flight_id')->constrained('flights');
-            $table->date('flight_date');
+            $table->date('departure_date');
+            $table->date('arrival_date');
             $table->string('status');
             $table->timestamps();
         });

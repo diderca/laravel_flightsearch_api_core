@@ -44,16 +44,16 @@ class FlightSeeder extends Seeder
                 'number' =>'2',
                 'departure_airport' =>'YUL',
                 'departure_time' =>'01:05',
-                'arrival_airport' =>'DOH',
+                'arrival_airport' =>'YYZ',
                 'arrival_time' =>'23.00',
                 'price' =>'273.23',
                 'status' =>'Active'
                 ],
-              [
+             [
                 'id' =>4,
                 'airline' =>'QA',
                 'number' =>'4',
-                'departure_airport' =>'DOH',
+                'departure_airport' =>'YYZ',
                 'departure_time' =>'07:50',
                 'arrival_airport' =>'YUL',
                 'arrival_time' =>'18.10',
@@ -64,14 +64,46 @@ class FlightSeeder extends Seeder
                 'id' =>5,
                 'airline' =>'AC',
                 'number' =>'5',
-                'departure_airport' =>'DOH',
+                'departure_airport' =>'YVR',
                 'departure_time' =>'1:20',
-                'arrival_airport' =>'YUL',
+                'arrival_airport' =>'YYZ',
                 'arrival_time' =>'11:50',
                 'price' =>'293.23',
                 'status' =>'Active'
-                ]
-            ]
+                ],
+             [
+                'id' =>6,
+                'airline' =>'AC',
+                'number' =>'5',
+                'departure_airport' =>'YYZ',
+                'departure_time' =>'1:20',
+                'arrival_airport' =>'YVR',
+                'arrival_time' =>'11:50',
+                'price' =>'293.23',
+                'status' =>'Active'
+                ],
+             [
+                'id' =>7,
+                'airline' =>'WJA',
+                'number' =>'5',
+                'departure_airport' =>'YVR',
+                'departure_time' =>'1:20',
+                'arrival_airport' =>'YYZ',
+                'arrival_time' =>'11:50',
+                'price' =>'293.23',
+                'status' =>'Active'
+                ],
+             [
+                'id' =>8,
+                'airline' =>'WJA',
+                'number' =>'5',
+                'departure_airport' =>'YYZ',
+                'departure_time' =>'1:20',
+                'arrival_airport' =>'YVR',
+                'arrival_time' =>'11:50',
+                'price' =>'293.23',
+                'status' =>'Active'
+            ]]
         );
     }
 }

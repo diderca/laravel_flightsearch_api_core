@@ -29,17 +29,30 @@ class AirportSeeder extends Seeder
                 'timezone' =>'America/Montreal',
                 'status' =>'Active'
                 ],
-            [
-                'id' =>2,
-                'name' =>'Vancouver International',
-                'code' =>'YVR',
-                'city' =>'Vancouver',
-                'city_code' =>'YVR',
+                [
+                    'id' =>2,
+                    'name' =>'Vancouver International',
+                    'code' =>'YVR',
+                    'city' =>'Vancouver',
+                    'city_code' =>'YVR',
+                    'country_code' =>'CA',
+                    'region_code' =>'BC',
+                    'latitude' =>'49.194698',
+                    'longitude' =>'-123.179192',
+                    'timezone' =>'America/Vancouver',
+                    'status' =>'Active'
+                ],
+                [
+                'id' =>3,
+                'name' =>'Pearson International Airport',
+                'code' =>'YYZ',
+                'city' =>'Toronto',
+                'city_code' =>'YYZ',
                 'country_code' =>'CA',
-                'region_code' =>'BC',
-                'latitude' =>'49.194698',
-                'longitude' =>'-123.179192',
-                'timezone' =>'America/Vancouver',
+                'region_code' =>'ON',
+                'latitude' =>'43.677700',
+                'longitude' =>'-79.624800',
+                'timezone' =>'America/Toronto',
                 'status' =>'Active'
                 ]],
         );

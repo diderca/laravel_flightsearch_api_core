@@ -26,7 +26,7 @@ class Trip extends Model
     public function flights() 
     {
       return $this->belongsToMany(Flight::class, 'trip_flight')
-      ->withPivot(['flight_date'])
+      ->withPivot(['departure_date', 'arrival_date'])
       ->as('flight_info');
     } 
  
